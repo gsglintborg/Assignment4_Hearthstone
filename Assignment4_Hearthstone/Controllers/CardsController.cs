@@ -18,7 +18,7 @@ namespace Assignment4_Hearthstone.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<CardMappedToMetadataDTO>> GetCardsAsync(QueryParameters param)
+        public async Task<ActionResult<IEnumerable<CardMappedToMetadataDTO>>> GetCardsAsync([FromQuery] QueryParameters param)
         {
             _logger.LogInformation(
                 $"Page = {param.Page}\n" +
@@ -29,6 +29,10 @@ namespace Assignment4_Hearthstone.Controllers
 
             var result = await _cardService.GetCardsByQueryAsync(param);
             _logger.LogInformation($"NumberOfCardsFound = {result.Count}\n");
+
+            if (result == null)
+                return NotFound();
+
             return Ok(result);
         }
 

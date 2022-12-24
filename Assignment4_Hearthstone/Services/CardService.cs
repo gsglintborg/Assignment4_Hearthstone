@@ -46,25 +46,25 @@ namespace Assignment4_Hearthstone.Services
 
             // Parameter for filtering cards by Set
             if (param.SetId != null)
-                filter &= Builders<Card>.Filter.Eq(x => x.SetId, param.SetId);
+            { filter &= Builders<Card>.Filter.Eq(x => x.SetId, param.SetId); }
 
             // Parameter for filtering cards by Artist
             if (param.Artist != null)
-                filter &= Builders<Card>.Filter.Eq(x => x.Artist, param.Artist);
+            { filter &= Builders<Card>.Filter.Eq(x => x.Artist, param.Artist); }
 
             // Parameter for filtering cards by Class
             if (param.ClassId != null)
-                filter &= Builders<Card>.Filter.Eq(x => x.ClassId, param.ClassId);
+            { filter &= Builders<Card>.Filter.Eq(x => x.ClassId, param.ClassId); }
 
             // Parameter for filtering cards by Rarity
             if (param.RarityId != null)
-                filter &= Builders<Card>.Filter.Eq(x => x.RarityId, param.RarityId);
+            { filter &= Builders<Card>.Filter.Eq(x => x.RarityId, param.RarityId); }
 
             // Parameter for pagination, each page must have at most 100 entries
             if (param.Page != null)
-                result = await _cardCollection.Find(filter).Skip(param.Page > 0 ? ((param.Page - 1) * 100) : 0).Limit(100).ToListAsync();
+            { result = await _cardCollection.Find(filter).Skip(param.Page > 0 ? ((param.Page - 1) * 100) : 0).Limit(100).ToListAsync(); }
             else
-                result = await _cardCollection.Find(filter).ToListAsync();
+            { result = await _cardCollection.Find(filter).ToListAsync(); }
 
             return MapCardsToMetadata(result);
         }
