@@ -18,7 +18,7 @@ namespace Assignment4_Hearthstone.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CardMappedToMetadataDTO>>> GetCardsAsync([FromQuery] QueryParameters param)
+        public async Task<ActionResult<CardMappedToMetadataDTO>> GetCardsAsync([FromQuery] QueryParameters param)
         {
             _logger.LogInformation(
                 $"Page = {param.Page}\n" +

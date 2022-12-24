@@ -2,6 +2,7 @@
 using Assignment4_Hearthstone.Models;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
+using Microsoft.VisualBasic;
 
 namespace Assignment4_Hearthstone.Services
 {
@@ -69,33 +70,39 @@ namespace Assignment4_Hearthstone.Services
             return MapCardsToMetadata(result);
         }
 
-        // Maps the cards to the metadata by Id, so that the string value is returned instead of the Ids
+        // Maps the cards to the metadata by Id, so that the string value is returned instead of the Id
         public List<CardMappedToMetadataDTO> MapCardsToMetadata(List<Card> cards)
         {
-            var query = from card in cards
-                        join cardtype in _cardTypeCollection.AsQueryable() on card.TypeId equals cardtype.Id
-                        join cardclass in _classCollection.AsQueryable() on card.ClassId equals cardclass.Id
-                        join rarity in _rarityCollection.AsQueryable() on card.RarityId equals rarity.Id
-                        join set in _setCollection.AsQueryable() on card.SetId equals set.Id
-
-                        select new CardMappedToMetadataDTO
-                        {
-                            Id = card.Id,
-                            Name = card.Name,
-                            Class = cardclass.Name,
-                            Type = cardtype.Name,
-                            Set = set.Name,
-                            SpellSchool = "N/A",
-                            Rarity = rarity.Name,
-                            Health = card.Health,
-                            Attack = card.Attack,
-                            ManaCost = card.ManaCost,
-                            Artist = card.Artist,
-                            Text = card.Text,
-                            FlavorText = card.FlavorText
-                        };
+            var dto = new List<CardMappedToMetadataDTO>();
             
-            return query.ToList();
+            foreach (var card in cards)
+            {
+                dto.Add(new CardMappedToMetadataDTO
+                {
+                    Id = card.Id,
+                    Name = card.Name,
+                    Class = (from c in _classCollection.AsQueryable()
+                             where c.Id == card.ClassId
+                             select c.Name).FirstOrDefault(),
+                    Type = (from t in _cardTypeCollection.AsQueryable()
+                            where t.Id == card.TypeId
+                            select t.Name).FirstOrDefault(),
+                    Set = (from s in _setCollection.AsQueryable()
+                           where s.Id == card.SetId
+                           select s.Name).FirstOrDefault(),
+                    SpellSchoolId = card.SpellSchoolId,
+                    Rarity = (from r in _rarityCollection.AsQueryable()
+                              where r.Id == card.RarityId
+                              select r.Name).FirstOrDefault(),
+                    Health = card.Health,
+                    Attack = card.Attack,
+                    ManaCost = card.ManaCost,
+                    Artist = card.Artist,
+                    Text = card.Text,
+                    FlavorText = card.FlavorText
+                });
+            }
+            return dto;
         }
     }
 }
