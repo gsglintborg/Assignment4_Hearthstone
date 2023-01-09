@@ -4,7 +4,7 @@ using Assignment4_Hearthstone.Services;
 
 namespace Assignment4_Hearthstone.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("cards")]
     [ApiController]
     public class CardsController : ControllerBase
     {

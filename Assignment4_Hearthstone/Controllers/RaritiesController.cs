@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Assignment4_Hearthstone.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("rarities")]
     [ApiController]
     public class RaritiesController : ControllerBase
     {
