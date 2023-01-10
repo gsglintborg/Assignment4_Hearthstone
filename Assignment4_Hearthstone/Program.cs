@@ -25,6 +25,25 @@ builder.Host.ConfigureLogging(log =>
 
 var app = builder.Build();
 
+// Using a Scope to call the Create() methods from the Services to seed database
+// Found inspiration for this code at https://peakup.org/blog/asp-net-core-dependency-injection-and-service-lifetimes/
+using (var scope = app.Services.CreateScope())
+{
+    var service = scope.ServiceProvider;
+
+    var seedCards = service.GetRequiredService<CardService>();
+    var seedCardTypes = service.GetRequiredService<CardTypeService>();
+    var seedClasses = service.GetRequiredService<ClassService>();
+    var seedRarities = service.GetRequiredService<RarityService>();
+    var seedSets = service.GetRequiredService<SetService>();
+
+    seedCards.CreateCards();
+    seedCardTypes.CreateCardTypes();
+    seedClasses.CreateClasses();
+    seedRarities.CreateRarities();
+    seedSets.CreateSets();
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -35,4 +54,5 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+app.UseRouting();
 app.Run();
