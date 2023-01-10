@@ -28,6 +28,7 @@ namespace Assignment4_Hearthstone.Controllers
                 $"RarityId = {param.RarityId}\n");
 
             var result = await _cardService.GetCardsByQueryAsync(param);
+
             _logger.LogInformation($"NumberOfCardsFound = {result.Count}\n");
 
             if (result == null)
@@ -36,11 +37,12 @@ namespace Assignment4_Hearthstone.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        public ActionResult SeedData()
-        {
-            _cardService.CreateCards();
-            return Ok();
-        }
+        // Seeding of data is moved to Program.cs, removing the need to manually POST the data
+        //[HttpPost]
+        //public ActionResult SeedData()
+        //{
+        //    _cardService.CreateCards();
+        //    return Ok();
+        //}
     }
 }

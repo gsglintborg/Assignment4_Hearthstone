@@ -31,11 +31,12 @@ namespace Assignment4_Hearthstone.Controllers
             return Ok(cardtype);
         }
 
-        [HttpPost]
-        public ActionResult SeedData()
-        {
-            _typeService.CreateCardTypes();
-            return Ok();
-        }
+        // Seeding of data is moved to Program.cs, removing the need to manually POST the data
+        //[HttpPost]
+        //public ActionResult SeedData()
+        //{
+        //    _typeService.CreateCardTypes();
+        //    return Ok();
+        //}
     }
 }
