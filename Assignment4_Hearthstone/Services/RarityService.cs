@@ -25,6 +25,9 @@ namespace Assignment4_Hearthstone.Services
         // Code is inspired from Lesson 12 example code
         public void CreateRarities()
         {
+            if (_rarityCollection.Find(x => true).Any())
+                return;
+
             foreach (var path in new[] { "metadata.json" })
             {
                 using var file = new StreamReader(path);

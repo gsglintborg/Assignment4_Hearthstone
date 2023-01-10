@@ -29,6 +29,9 @@ namespace Assignment4_Hearthstone.Services
         // Code is inspired from Lesson 12 example code
         public void CreateCards()
         {
+            if (_cardCollection.Find(x => true).Any())
+                return;
+            
             foreach (var path in new[] { "cards.json" })
             {
                 using var file = new StreamReader(path);

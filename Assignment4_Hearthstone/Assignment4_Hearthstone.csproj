@@ -15,6 +15,7 @@
   <ItemGroup>
     <None Remove="docker-compose.yaml" />
     <None Remove="Dockerfile" />
+    <None Remove="mongo-compose.yaml" />
   </ItemGroup>
 
   <ItemGroup>
